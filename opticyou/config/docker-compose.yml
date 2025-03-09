@@ -1,0 +1,23 @@
+services:
+  postgres_db:
+    image: postgres:latest
+    container_name: postgres_db
+    environment:
+      POSTGRES_DB: opticyou
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: ioc
+    ports:
+      - "1111:5432"
+    volumes:
+      - opticyou-db:/var/lib/postgresql/data
+    networks:
+      - backend
+
+volumes:
+  opticyou-db:
+    driver: local
+
+networks:
+  backend:
+    driver: bridge
+
