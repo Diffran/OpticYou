@@ -1,4 +1,4 @@
-M13Demo app
+OpticYou app
 =================================
-This application is a mobile client of the example mini project.
+This application is a mobile client our OpticYou project.
 It is written using Kotlin and JetPack Compose
