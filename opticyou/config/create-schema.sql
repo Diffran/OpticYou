@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS opticyou.usuari (
   nom VARCHAR(45),
   email VARCHAR(45) NOT NULL,
   contrasenya VARCHAR(45) NOT NULL,
-  is_admin BOOLEAN DEFAULT false
+  rol VARCHAR(11) CHECK (rol IN ('ADMIN', 'CLIENT','TREBALLADOR'))DEFAULT 'CLIENT'
 );
 
 -- -----------------------------------------------------

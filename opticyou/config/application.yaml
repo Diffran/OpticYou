@@ -14,3 +14,8 @@ spring:
   security:
     user:
       password: 1234
+    jwt:
+      secret-key: d3eC8t6C0f5sG9zS7kL4pQ2rVb1B8wXn #aixo hauria de ser privat i tal, però de moment es queda així
+      expiration: 86400000
+      refresh-token:
+        expiration: 604800000
