@@ -5,7 +5,6 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 
 
-@Builder
 public class LoginRequestDTO {
     @Email
     private String email;

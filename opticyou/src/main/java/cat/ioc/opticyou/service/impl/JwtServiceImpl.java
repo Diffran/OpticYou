@@ -18,10 +18,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-@RequiredArgsConstructor
 public class JwtServiceImpl implements JwtService {
     @Value("${security.jwt.secret-key}")
     private String secretKey;
+
+    public JwtServiceImpl(){
+
+    }
+    public JwtServiceImpl(String secretKey){
+        this.secretKey = secretKey;
+    }
 
     @Override
     public String getToken(UserDetails userDetails) {
