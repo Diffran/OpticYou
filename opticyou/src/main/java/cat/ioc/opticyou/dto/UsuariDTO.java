@@ -6,16 +6,18 @@ public class UsuariDTO {
     private Long idUsuari;
     private String nom;
     private String email;
-    private boolean isAdmin;
+    private String contrasenya;
+    private String rol;
 
     public UsuariDTO() {
         this.idUsuari = idUsuari;
     }
-    public UsuariDTO(Long idUsuari, String nom, String email, boolean isAdmin) {
+    public UsuariDTO(Long idUsuari, String nom, String email, String rol, String contrasenya) {
         this.idUsuari = idUsuari;
         this.nom = nom;
         this.email = email;
-        this.isAdmin = isAdmin;
+        this.rol = rol;
+        this.contrasenya=contrasenya;
     }
 
     public String getNom() {
@@ -34,12 +36,20 @@ public class UsuariDTO {
         this.email = email;
     }
 
-    public boolean isAdmin() {
-        return isAdmin;
+    public String getContrasenya() {
+        return contrasenya;
     }
 
-    public void setAdmin(boolean admin) {
-        isAdmin = admin;
+    public void setContrasenya(String contrasenya) {
+        this.contrasenya = contrasenya;
+    }
+
+    public String getRol() {
+        return rol;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
     }
 
     public Long getIdUsuari() {

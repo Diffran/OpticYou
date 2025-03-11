@@ -12,7 +12,8 @@ public class UsuariMapper {
         usuariDTO.setIdUsuari(usuari.getIdUsuari());
         usuariDTO.setNom(usuari.getNom());
         usuariDTO.setEmail(usuari.getEmail());
-        usuariDTO.setAdmin(usuari.getAdmin());
+        usuariDTO.setRol(usuari.getRol());
+        usuariDTO.setContrasenya(usuari.getContrasenya());
         return usuariDTO;
     }
     public static Usuari toEntity(UsuariDTO usuariDTO){
@@ -23,7 +24,8 @@ public class UsuariMapper {
         usuari.setIdUsuari(usuariDTO.getIdUsuari());
         usuari.setNom(usuariDTO.getNom());
         usuari.setEmail(usuariDTO.getEmail());
-        usuari.setAdmin(usuariDTO.isAdmin());
+        usuari.setRol(usuariDTO.getRol());
+        usuari.setContrasenya(usuariDTO.getContrasenya());
         return usuari;
     }
 }
