@@ -10,7 +10,6 @@ public class JwtAuthenticationResponseDTO {
         this.token = token;
         this.userId = userId;
     }
-
     public JwtAuthenticationResponseDTO() {
     }
 
