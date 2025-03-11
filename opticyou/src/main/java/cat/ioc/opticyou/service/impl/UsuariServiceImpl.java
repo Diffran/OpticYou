@@ -6,10 +6,12 @@ import cat.ioc.opticyou.repositori.UsuariRepositori;
 import cat.ioc.opticyou.service.UsuariService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -17,14 +19,14 @@ public class UsuariServiceImpl implements UsuariService {
     @Autowired
     private UsuariRepositori usuariRepositori;
 
+    @Override
+    public void update(String email) {
+        //TODO: update data from user
+    }
 
     @Override
-    public boolean authenticate(String email, String contrasenya) {
-        UsuariDTO usuariDTO = getByEmail(email);
-        if(!usuariDTO.getContrasenya().equals(contrasenya)){
-            return false;
-        }
-        return true;
+    public void delete(String email) {
+        //TODO: delete Usuari
     }
 
     @Override
@@ -41,14 +43,15 @@ public class UsuariServiceImpl implements UsuariService {
                 .collect(Collectors.toList());
     }
 
-
+    //seguretat
     @Override
-    public void update(String email) {
-        //TODO: update data from user
-    }
-
-    @Override
-    public void delete(String email) {
-        //TODO: delete Usuari
+    public UserDetailsService userDetailsService() {
+        return new UserDetailsService() {
+            @Override
+            public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+                return usuariRepositori.findByEmail(username)
+                        .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + username));
+            }
+        };
     }
 }

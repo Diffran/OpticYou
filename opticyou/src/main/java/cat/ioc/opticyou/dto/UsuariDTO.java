@@ -1,23 +1,22 @@
 package cat.ioc.opticyou.dto;
 
 
+import cat.ioc.opticyou.util.Rol;
 
 public class UsuariDTO {
     private Long idUsuari;
     private String nom;
     private String email;
-    private String contrasenya;
-    private String rol;
+    private Rol rol;
 
     public UsuariDTO() {
         this.idUsuari = idUsuari;
     }
-    public UsuariDTO(Long idUsuari, String nom, String email, String rol, String contrasenya) {
+    public UsuariDTO(Long idUsuari, String nom, String email, Rol rol) {
         this.idUsuari = idUsuari;
         this.nom = nom;
         this.email = email;
         this.rol = rol;
-        this.contrasenya=contrasenya;
     }
 
     public String getNom() {
@@ -36,27 +35,19 @@ public class UsuariDTO {
         this.email = email;
     }
 
-    public String getContrasenya() {
-        return contrasenya;
-    }
-
-    public void setContrasenya(String contrasenya) {
-        this.contrasenya = contrasenya;
-    }
-
-    public String getRol() {
-        return rol;
-    }
-
-    public void setRol(String rol) {
-        this.rol = rol;
-    }
-
     public Long getIdUsuari() {
         return idUsuari;
     }
 
     public void setIdUsuari(Long idUsuari) {
         this.idUsuari = idUsuari;
+    }
+
+    public Rol getRol() {
+        return rol;
+    }
+
+    public void setRol(Rol rol) {
+        this.rol = rol;
     }
 }

@@ -13,7 +13,6 @@ public class UsuariMapper {
         usuariDTO.setNom(usuari.getNom());
         usuariDTO.setEmail(usuari.getEmail());
         usuariDTO.setRol(usuari.getRol());
-        usuariDTO.setContrasenya(usuari.getContrasenya());
         return usuariDTO;
     }
     public static Usuari toEntity(UsuariDTO usuariDTO){
@@ -25,7 +24,6 @@ public class UsuariMapper {
         usuari.setNom(usuariDTO.getNom());
         usuari.setEmail(usuariDTO.getEmail());
         usuari.setRol(usuariDTO.getRol());
-        usuari.setContrasenya(usuariDTO.getContrasenya());
         return usuari;
     }
 }
