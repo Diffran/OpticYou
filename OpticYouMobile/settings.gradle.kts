@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "OpticYouMobile"
+rootProject.name = "OpticYou"
 include(":app")
  
