@@ -1,10 +1,17 @@
 package cat.ioc.opticyou.model;
 
+import cat.ioc.opticyou.util.Rol;
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name="usuari",schema = "opticyou")
-public class Usuari {
+public class Usuari implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="idusuari")
@@ -12,20 +19,38 @@ public class Usuari {
     private String nom;
     private String email;
     private String contrasenya;
-    @Column(name="is_admin")
-    private Boolean isAdmin;
+    @Enumerated(EnumType.STRING)
+    private Rol rol;
 
     public Usuari() {
       }
 
-    public Usuari(Long idUsuari, String nom, String email, String contrasenya, Boolean isAdmin) {
+    public Usuari(Long idUsuari, String nom, String email, String contrasenya, Rol rol) {
         this.idUsuari = idUsuari;
         this.nom = nom;
         this.email = email;
         this.contrasenya = contrasenya;
-        this.isAdmin = isAdmin;
+        this.rol = rol;
     }
 
+    //SEGURETAT
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority((rol.name())));
+    }
+
+    @Override
+    public String getPassword() {
+        return this.contrasenya;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.email;
+    }
+
+
+    //GETTERS I SETTERS
     public String getNom() {
         return nom;
     }
@@ -50,12 +75,12 @@ public class Usuari {
         this.contrasenya = contrasenya;
     }
 
-    public Boolean getAdmin() {
-        return isAdmin;
+    public Rol getRol() {
+        return rol;
     }
 
-    public void setAdmin(Boolean admin) {
-        isAdmin = admin;
+    public void setRol(Rol rol) {
+        this.rol = rol;
     }
 
     public Long getIdUsuari() {
@@ -64,5 +89,25 @@ public class Usuari {
 
     public void setIdUsuari(Long idUsuari) {
         this.idUsuari = idUsuari;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }

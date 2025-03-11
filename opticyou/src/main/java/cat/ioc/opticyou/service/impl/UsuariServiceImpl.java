@@ -6,6 +6,9 @@ import cat.ioc.opticyou.repositori.UsuariRepositori;
 import cat.ioc.opticyou.service.UsuariService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -38,5 +41,17 @@ public class UsuariServiceImpl implements UsuariService {
         return usuariRepositori.findAll().stream()
                 .map(UsuariMapper::toDto)
                 .collect(Collectors.toList());
+    }
+
+    //seguretat
+    @Override
+    public UserDetailsService userDetailsService() {
+        return new UserDetailsService() {
+            @Override
+            public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+                return usuariRepositori.findByEmail(username)
+                        .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + username));
+            }
+        };
     }
 }
