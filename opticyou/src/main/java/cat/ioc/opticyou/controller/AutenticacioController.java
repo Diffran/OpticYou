@@ -27,23 +27,6 @@ public class AutenticacioController {
     public ResponseEntity<JwtAuthenticationResponseDTO> login(@Valid @RequestBody LoginRequestDTO request){
         return ResponseEntity.ok(authenticationService.login(request));
     }
-    //TODO: logout
-//    crear una black list
-//    CREATE TABLE IF NOT EXISTS revoked_tokens (
-//            token VARCHAR(500) PRIMARY KEY,
-//    expiry_date TIMESTAMP NOT NULL
-//);
-//    @PostMapping("/logout")
-//    public ResponseEntity<String> logout(HttpServletRequest request) {
-//        String token = request.getHeader("Authorization").substring(7); // Eliminar "Bearer "
-//        authenticationService.revokeToken(token); // Aquí pots desar-lo a una blacklist
-//        return ResponseEntity.ok("Logged out successfully.");
-//    }
 
-
-    //TODO: SIGN IN
-//    @PostMapping("/signup")
-//    public ResponseEntity<JwtAuthenticationResponse> register(@Valid @RequestBody SignRequest request){
-//        return ResponseEntity.ok(authenticationService.signUp(request));
-//    }
+    //TODO: SIGN IN falta el logout - crear una llista de tokens rotllo blakc list???
 }
