@@ -2,7 +2,6 @@ package cat.ioc.opticyou.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
-import lombok.Builder;
 
 
 public class LoginRequestDTO {
