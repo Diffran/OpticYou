@@ -1,6 +1,5 @@
 package cat.ioc.opticyou.dto;
 
-import lombok.Builder;
 
 public class JwtAuthenticationResponseDTO {
     private String token;

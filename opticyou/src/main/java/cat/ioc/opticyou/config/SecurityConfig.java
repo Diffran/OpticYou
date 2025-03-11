@@ -2,7 +2,6 @@ package cat.ioc.opticyou.config;
 
 import cat.ioc.opticyou.dto.UsuariDTO;
 import cat.ioc.opticyou.service.UsuariService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
