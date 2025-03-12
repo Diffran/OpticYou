@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -16,14 +17,14 @@ public class UsuariServiceImpl implements UsuariService {
     @Autowired
     private UsuariRepositori usuariRepositori;
 
-    @Override
-    public void update(String email) {
-        //TODO: update data from user
-    }
 
     @Override
-    public void delete(String email) {
-        //TODO: delete Usuari
+    public boolean authenticate(String email, String contrasenya) {
+        UsuariDTO usuariDTO = getByEmail(email);
+        if(!usuariDTO.getContrasenya().equals(contrasenya)){
+            return false;
+        }
+        return true;
     }
 
     @Override
@@ -38,5 +39,16 @@ public class UsuariServiceImpl implements UsuariService {
         return usuariRepositori.findAll().stream()
                 .map(UsuariMapper::toDto)
                 .collect(Collectors.toList());
+    }
+
+
+    @Override
+    public void update(String email) {
+        //TODO: update data from user
+    }
+
+    @Override
+    public void delete(String email) {
+        //TODO: delete Usuari
     }
 }

@@ -9,4 +9,5 @@ public interface UsuariService {
     void delete(String email);
     UsuariDTO getByEmail(String email);
     List<UsuariDTO> getAll();
+    public boolean authenticate(String email, String contrasenya);
 }

@@ -12,18 +12,18 @@ public class Usuari {
     private String nom;
     private String email;
     private String contrasenya;
-    @Column(name="is_admin")
-    private Boolean isAdmin;
+    @Column(name="rol")
+    private String rol;
 
     public Usuari() {
       }
 
-    public Usuari(Long idUsuari, String nom, String email, String contrasenya, Boolean isAdmin) {
+    public Usuari(Long idUsuari, String nom, String email, String contrasenya, String rol) {
         this.idUsuari = idUsuari;
         this.nom = nom;
         this.email = email;
         this.contrasenya = contrasenya;
-        this.isAdmin = isAdmin;
+        this.rol = rol;
     }
 
     public String getNom() {
@@ -50,12 +50,12 @@ public class Usuari {
         this.contrasenya = contrasenya;
     }
 
-    public Boolean getAdmin() {
-        return isAdmin;
+    public String getRol() {
+        return rol;
     }
 
-    public void setAdmin(Boolean admin) {
-        isAdmin = admin;
+    public void setRol(String rol) {
+        this.rol = rol;
     }
 
     public Long getIdUsuari() {

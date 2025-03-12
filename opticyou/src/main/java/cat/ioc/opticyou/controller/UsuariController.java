@@ -1,14 +1,12 @@
 package cat.ioc.opticyou.controller;
 
+import cat.ioc.opticyou.dto.Login;
 import cat.ioc.opticyou.dto.UsuariDTO;
 import cat.ioc.opticyou.service.UsuariService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,6 +29,21 @@ public class UsuariController {
         } catch (RuntimeException ex) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
+    }
 
+    //TODO: es temporal
+    @PostMapping("/login")
+    public ResponseEntity<Boolean> login(@RequestBody Login login) {
+        boolean valid = usuariService.authenticate(login.getEmail(), login.getPassword());
+        return ResponseEntity.ok(valid);
+    }
+
+    @PostMapping("/login-string")
+    public ResponseEntity<String> loginString(@RequestBody Login login) {
+        boolean valid = usuariService.authenticate(login.getEmail(), login.getPassword());
+        if(valid) {
+            return ResponseEntity.ok("token");
+        }
+        return ResponseEntity.ok("contrasenya incorrecte");
     }
 }
