@@ -195,8 +195,4 @@ object CommController {
         }
     }
 
-    //Funció provisional
-    fun getUserRole(username: String): String {
-        return if (username == "admin") "admin" else "user"
-    }
 }

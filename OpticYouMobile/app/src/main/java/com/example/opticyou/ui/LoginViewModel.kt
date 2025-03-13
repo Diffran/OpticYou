@@ -26,10 +26,6 @@ class LoginViewModel(
     private val _uiState = MutableStateFlow(LoginUiState())
     val uiState: StateFlow<LoginUiState> = _uiState.asStateFlow()
 
-    // Connexió interna amb el servidor
-    private val SERVER_NAME = "192.168.1.100"  // IP o URL fixa
-    private val SERVER_PORT = 8083             // Port fix
-
     fun setLoginTried(tried: Boolean) {
         _uiState.update { currentState ->
             currentState.copy(
@@ -39,22 +35,21 @@ class LoginViewModel(
     }
 
     /**
-     * Logs in the server
+     * Inici de sessió al serviro
      */
     fun doLogin(username: String, password: String, onSuccess: (LoginResponse) -> Unit) {
-        viewModelScope.launch(ioDispatcher) {
+        println("🔍 doLogin() cridat amb: $username - $password")  // Debug log
+
+        viewModelScope.launch(Dispatchers.IO) {
             val response = try {
-                ServerRequests.login(SERVER_NAME, SERVER_PORT, username, password)
+                ServerRequests.login(username, password)
             } catch (e: Exception) {
+                println("⚠️ Error a ServerRequests.login(): ${e.message}")  // Debug log
                 null
             }
-            _uiState.update { it.copy(loginTried = true) }
-            withContext(mainDispatcher) {
-                // Si response és null, creem un LoginResponse fallit per defecte.
-                val finalResponse = response ?: LoginResponse(success = false, role = "")
-                // Cridem el callback sempre.
-                onSuccess(finalResponse)
-                setGoodResult(finalResponse.success)
+            withContext(Dispatchers.Main) {
+                println("🔍 Resposta del servidor: $response")  // Debug log
+                onSuccess(response ?: LoginResponse(success = false, role = ""))
             }
         }
     }

@@ -85,14 +85,20 @@ fun LoginScreen(
         Button(
             onClick = {
                 if (username.isNotBlank() && password.isNotBlank()) {
-                    viewModel.doLogin(username, password, navigate) // Crida al ViewModel
+                    viewModel.doLogin(username, password) { response ->
+                        if (response.success) {
+                            navigate(response)
+                        } else {
+                            showError = true
+                        }
+                    }
                 } else {
-                    showError = true // Mostra error si hi ha camps buits
+                    showError = true
                 }
             },
             modifier = Modifier
                 .fillMaxWidth()
-                .testTag("loginButton")  // Tag per identificar el botó
+                .testTag("loginButton")
         ) {
             Text("Iniciar Sessió")
         }

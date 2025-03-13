@@ -1,9 +1,14 @@
 package com.example.opticyou.communications
 
+import com.example.opticyou.communications.network.RetrofitClient
+import com.example.opticyou.data.LoginRequest
 import com.example.opticyou.data.LoginResponse
 import com.example.opticyou.data.User
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import kotlinx.coroutines.withContext
+import retrofit2.awaitResponse
 
 /**
  * Object with functions for calling the server
@@ -15,11 +20,15 @@ object ServerRequests {
     private val accessMutex = Mutex()
 
     //Validació d'usuari i contrasenya sense servidor
-//    suspend fun login(serverName: String, port: Int, username: String, password: String): LoginResponse? = accessMutex.withLock {
+//    suspend fun login(username: String, password: String): LoginResponse? = accessMutex.withLock {
+//        // Validació: el nom d'usuari ha de ser un correu electrònic.
+//        if (!username.contains("@")) {
+//            return LoginResponse(success = false, role = "")
+//        }
 //        // Simulem que si la contrasenya és "1234", el login és exitós.
-//        // Si el nom d'usuari és "admin", retornem el rol "admin", en cas contrari "user".
+//        // Si el nom d'usuari és "admin@optica.cat", retornem el rol "admin", en cas contrari "user".
 //        return if (password == "1234") {
-//            val role = if (username == "admin") "admin" else "user"
+//            val role = if (username.equals("admin@optica.cat", ignoreCase = true)) "admin" else "user"
 //            LoginResponse(success = true, role = role)
 //        } else {
 //            // Si la contrasenya no és "1234", el login falla.
@@ -28,24 +37,27 @@ object ServerRequests {
 //    }
 
     //Validació login amb servidor
-    suspend fun login(serverName: String, port: Int, username: String, password: String): LoginResponse? = accessMutex.withLock {
-        // Configura la connexió amb el servidor
-        CommController.setServerName(serverName)
-        CommController.setPort(port)
+    suspend fun login(username: String, password: String): LoginResponse? {
+        println("🔍 Enviant petició de login amb $username - $password")  // Debug log
 
-        // Crida la funció de login i obté un codi de retorn
-        val result = CommController.doLogin(username, password)
+        return withContext(Dispatchers.IO) {
+            try {
+                val response = RetrofitClient.instance.login(LoginRequest(username, password)).awaitResponse()
+                println("🔍 Resposta del servidor: ${response.code()} - ${response.message()}")  // Debug log
 
-        return if (result == CommController.OK_RETURN_CODE) {
-            // Obtenim el rol de l'usuari a partir del seu nom, segons la teva lògica de negoci
-            val role = CommController.getUserRole(username)
-            LoginResponse(success = true, role = role)
-        } else {
-            // Si el login falla, retorna un LoginResponse amb success = false;
-            // aquí pots optar per assignar un rol per defecte, o simplement deixar-lo buit.
-            LoginResponse(success = false, role = "")
+                if (response.isSuccessful) {
+                    response.body()
+                } else {
+                    println("⚠️ Error en la resposta: ${response.errorBody()?.string()}")  // Debug log
+                    null
+                }
+            } catch (e: Exception) {
+                println("⚠️ Excepció en la crida API: ${e.message}")  // Debug log
+                null
+            }
         }
     }
+
 
     suspend fun logout():Boolean = accessMutex.withLock {
         return (CommController.doLogout()==CommController.OK_RETURN_CODE)

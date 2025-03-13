@@ -14,8 +14,6 @@ class MenuAdminViewModel : IOViewModel() {
 
     fun logout() {
         viewModelScope.launch (Dispatchers.IO){
-            var result: User?
-
             ServerRequests.logout()
          }
     }
