@@ -1,4 +1,4 @@
-package cat.ioc.opticyou.dto;
+package cat.ioc.opticyou.dto.loginLogout;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;

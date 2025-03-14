@@ -1,10 +1,9 @@
 package cat.ioc.opticyou.controller;
 
-import cat.ioc.opticyou.dto.LoginRequestDTO;
-import cat.ioc.opticyou.dto.JwtAuthenticationResponseDTO;
-import cat.ioc.opticyou.dto.TemporalJwtAuthResponseDTO;
+import cat.ioc.opticyou.dto.loginLogout.LoginRequestDTO;
+import cat.ioc.opticyou.dto.loginLogout.JwtAuthenticationDTO;
+import cat.ioc.opticyou.dto.loginLogout.ClientLoginResponseDTO;
 import cat.ioc.opticyou.dto.UsuariDTO;
-import cat.ioc.opticyou.model.Usuari;
 import cat.ioc.opticyou.service.AuthenticationService;
 import cat.ioc.opticyou.service.UsuariService;
 import jakarta.validation.Valid;
@@ -28,16 +27,16 @@ public class AutenticacioController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<JwtAuthenticationResponseDTO> login(@Valid @RequestBody LoginRequestDTO request){
+    public ResponseEntity<JwtAuthenticationDTO> login(@Valid @RequestBody LoginRequestDTO request){
         return ResponseEntity.ok(authenticationService.login(request));
     }
 
     @PostMapping("/login-user")
-    public ResponseEntity<TemporalJwtAuthResponseDTO> loginUsuariDades(@Valid @RequestBody LoginRequestDTO request){
-        JwtAuthenticationResponseDTO token = authenticationService.login(request);
+    public ResponseEntity<ClientLoginResponseDTO> loginUsuariDades(@Valid @RequestBody LoginRequestDTO request){
+        JwtAuthenticationDTO token = authenticationService.login(request);
         UsuariDTO usuari = usuariService.getByEmail(request.getEmail());
 
-        return ResponseEntity.ok(new TemporalJwtAuthResponseDTO(true, token.getToken(), usuari.getRol().toString()));
+        return ResponseEntity.ok(new ClientLoginResponseDTO(true, token.getToken(), usuari.getRol().toString()));
     }
 
 

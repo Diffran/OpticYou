@@ -1,12 +1,12 @@
-package cat.ioc.opticyou.dto;
+package cat.ioc.opticyou.dto.loginLogout;
 
 
-public class JwtAuthenticationResponseDTO {
+public class JwtAuthenticationDTO {
     private String token;
-    public JwtAuthenticationResponseDTO(String token, String userId) {
+    public JwtAuthenticationDTO(String token, String userId) {
         this.token = token;
     }
-    public JwtAuthenticationResponseDTO() {
+    public JwtAuthenticationDTO() {
     }
 
     public String getToken() {
