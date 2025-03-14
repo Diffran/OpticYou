@@ -1,6 +1,5 @@
 package cat.ioc.opticyou.config;
 
-
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
@@ -17,8 +16,8 @@ public class SwaggerConfig {
                         addList("Bearer Authentication"))
                 .components(new Components().addSecuritySchemes
                         ("Bearer Authentication", createAPIKeyScheme()))
-                .info(new Info().title("Dice Game API Services")
-                        .description("Dice Game, roll the dice, 7 wins")
+                .info(new Info().title("OpticYou API Services")
+                        .description("OpticYou, software for small and medium optics")
                         .version("1.0"));
     }
 
