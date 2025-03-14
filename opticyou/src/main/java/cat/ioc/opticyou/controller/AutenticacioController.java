@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class AutenticacioController {
     @Autowired
     private final AuthenticationService authenticationService;
-    @Autowired
     public AutenticacioController(AuthenticationService authenticationService){
         this.authenticationService = authenticationService;
     }
