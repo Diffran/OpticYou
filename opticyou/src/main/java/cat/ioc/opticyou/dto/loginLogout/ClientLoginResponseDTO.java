@@ -1,11 +1,11 @@
-package cat.ioc.opticyou.dto;
+package cat.ioc.opticyou.dto.loginLogout;
 
-public class TemporalJwtAuthResponseDTO {
+public class ClientLoginResponseDTO {
     private boolean success;
     private String token;
     private String rol;
 
-    public TemporalJwtAuthResponseDTO(boolean success, String token, String rol) {
+    public ClientLoginResponseDTO(boolean success, String token, String rol) {
         this.success = success;
         this.token = token;
         this.rol = rol;
