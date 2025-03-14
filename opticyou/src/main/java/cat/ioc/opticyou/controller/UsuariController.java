@@ -33,7 +33,8 @@ public class UsuariController {
 
     //TODO: es temporal
     @PostMapping("/login")
-    public ResponseEntity<Boolean> login(@RequestBody Login login) {
+    public ResponseEntity<Boolean> login(@RequestParam("email") String email, @RequestParam("constrasenya") String contrsenya) {
+
         boolean valid = usuariService.authenticate(login.getEmail(), login.getPassword());
         return ResponseEntity.ok(valid);
     }
