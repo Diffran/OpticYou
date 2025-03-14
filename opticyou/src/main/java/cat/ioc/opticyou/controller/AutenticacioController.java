@@ -27,7 +27,6 @@ public class AutenticacioController {
         this.usuariService = usuariService;
     }
 
-    //TODO: PROVAR QUE NOMES AMB CERTS TOKENS PUC ENTRAR ALS ENDPOINTS QUE TINC
     @PostMapping("/login")
     public ResponseEntity<JwtAuthenticationResponseDTO> login(@Valid @RequestBody LoginRequestDTO request){
         return ResponseEntity.ok(authenticationService.login(request));
@@ -38,9 +37,10 @@ public class AutenticacioController {
         JwtAuthenticationResponseDTO token = authenticationService.login(request);
         UsuariDTO usuari = usuariService.getByEmail(request.getEmail());
 
-
-        return ResponseEntity.ok(new TemporalJwtAuthResponseDTO(token.getToken(), usuari));
+        return ResponseEntity.ok(new TemporalJwtAuthResponseDTO(true, token.getToken(), usuari.getRol().toString()));
     }
+
+
 
 //    @PostMapping("/register")
 //    public ResponseEntity<JwtAuthenticationResponseDTO> register(@Valid @RequestBody UsuariDTO usuari){

@@ -1,12 +1,14 @@
 package cat.ioc.opticyou.dto;
 
 public class TemporalJwtAuthResponseDTO {
+    private boolean success;
     private String token;
-    private UsuariDTO usuariDTO;
+    private String rol;
 
-    public TemporalJwtAuthResponseDTO(String token, UsuariDTO usuariDTO) {
+    public TemporalJwtAuthResponseDTO(boolean success, String token, String rol) {
+        this.success = success;
         this.token = token;
-        this.usuariDTO = usuariDTO;
+        this.rol = rol;
     }
 
     public String getToken() {
@@ -17,11 +19,19 @@ public class TemporalJwtAuthResponseDTO {
         this.token = token;
     }
 
-    public UsuariDTO getUsuariDTO() {
-        return usuariDTO;
+    public boolean isSuccess() {
+        return success;
     }
 
-    public void setUsuariDTO(UsuariDTO usuariDTO) {
-        this.usuariDTO = usuariDTO;
+    public void setSuccess(boolean success) {
+        this.success = success;
+    }
+
+    public String getRol() {
+        return rol;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
     }
 }
