@@ -1,6 +1,5 @@
 package cat.ioc.opticyou.controller;
 
-import cat.ioc.opticyou.dto.Login;
 import cat.ioc.opticyou.dto.UsuariDTO;
 import cat.ioc.opticyou.service.UsuariService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,19 +30,4 @@ public class UsuariController {
         }
     }
 
-    //TODO: es temporal
-    @PostMapping("/login")
-    public ResponseEntity<Boolean> login(@RequestBody Login login) {
-        boolean valid = usuariService.authenticate(login.getEmail(), login.getPassword());
-        return ResponseEntity.ok(valid);
-    }
-
-    @PostMapping("/login-string")
-    public ResponseEntity<String> loginString(@RequestBody Login login) {
-        boolean valid = usuariService.authenticate(login.getEmail(), login.getPassword());
-        if(valid) {
-            return ResponseEntity.ok("token");
-        }
-        return ResponseEntity.ok("contrasenya incorrecte");
-    }
 }
