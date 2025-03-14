@@ -38,12 +38,10 @@ public class Usuari implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority((rol.name())));
     }
-
     @Override
     public String getPassword() {
         return this.contrasenya;
     }
-
     @Override
     public String getUsername() {
         return this.email;

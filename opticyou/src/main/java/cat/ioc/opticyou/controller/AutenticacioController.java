@@ -2,6 +2,7 @@ package cat.ioc.opticyou.controller;
 
 import cat.ioc.opticyou.dto.LoginRequestDTO;
 import cat.ioc.opticyou.dto.JwtAuthenticationResponseDTO;
+import cat.ioc.opticyou.dto.UsuariDTO;
 import cat.ioc.opticyou.service.AuthenticationService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,5 +27,8 @@ public class AutenticacioController {
         return ResponseEntity.ok(authenticationService.login(request));
     }
 
-    //TODO: SIGN IN falta el logout - crear una llista de tokens rotllo blakc list???
+//    @PostMapping("/register")
+//    public ResponseEntity<JwtAuthenticationResponseDTO> register(@Valid @RequestBody UsuariDTO usuari){
+//        return ResponseEntity.ok(authenticationService.register(usuari));
+//    }
 }

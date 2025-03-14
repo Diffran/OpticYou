@@ -1,5 +1,6 @@
 package cat.ioc.opticyou.service.impl;
 
+import cat.ioc.opticyou.model.Usuari;
 import cat.ioc.opticyou.service.JwtService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -8,6 +9,7 @@ import java.util.function.Function;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -30,10 +32,17 @@ public class JwtServiceImpl implements JwtService {
 
     @Override
     public String getToken(UserDetails userDetails) {
-        return getToken(new HashMap<>(), userDetails);
+        Map<String, Object> userClaims = new HashMap<>();
+        if (userDetails instanceof Usuari) {
+            Usuari usuari = (Usuari) userDetails;
+            userClaims.put("usuari_id", usuari.getIdUsuari());
+            userClaims.put("rol", usuari.getRol());
+        }
+        return getToken(userClaims, userDetails);
     }
 
     private String getToken(Map<String,Object> extractClaims, UserDetails userDetails){
+
         return Jwts
                 .builder()
                 .setClaims(extractClaims)
