@@ -47,7 +47,7 @@ public class AutenticacioController {
     }
 
     @Operation(
-            summary = "Logout user",
+            summary = "Logout header",
             security = @SecurityRequirement(name = "Bearer Authentication")
     )
     @PostMapping("/logout")
@@ -55,6 +55,14 @@ public class AutenticacioController {
         if (header != null && header.startsWith("Bearer ")) {
             String token = header.substring(7);
             return ResponseEntity.ok(blackListService.logout(token));
+        }
+        return ResponseEntity.badRequest().body(false);
+    }
+
+    @PostMapping("/logout-string")
+    public ResponseEntity<Boolean> logoutString(@RequestBody String jwt) {
+        if (jwt != null) {
+            return ResponseEntity.ok(blackListService.logout(jwt));
         }
         return ResponseEntity.badRequest().body(false);
     }
