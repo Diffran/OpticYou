@@ -19,7 +19,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 
-
+/**
+ * Filtra les sol·licituds al servidor per verificar si el token del header és vàlid. Si ho és estableix autenticació del usuari
+ */
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
@@ -31,6 +33,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         this.jwtService = jwtService;
         this.usuariService = usuariService;
     }
+    /**
+     * Filtra les sol·licituds HTTP per verificar el token JWT en el header.
+     * Si el token és vàlid, estableix l'autenticació, el dona per bo.
+     */
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response
             , @NonNull FilterChain filterChain) throws ServletException, IOException {
@@ -66,6 +72,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
+    /**
+     *Extreu el token del header
+     *
+     * @param request sol·licitud HTTP.
+     * @return El token JWT com a cadena.
+     */
     private String getTokenFromRequest(HttpServletRequest request){
         final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
         return authHeader.substring(7);

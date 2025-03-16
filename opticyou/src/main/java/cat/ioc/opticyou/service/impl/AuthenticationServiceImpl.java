@@ -12,6 +12,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+/**
+ * Gestiona el procés de login i genera el JWT
+ */
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
     private final UsuariRepositori usuariRepositori;
@@ -19,7 +22,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
 
-    //
     @Autowired
     public AuthenticationServiceImpl(UsuariRepositori usuariRepositori, JwtServiceImpl jwtService, AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder) {
         this.usuariRepositori = usuariRepositori;
@@ -28,6 +30,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
        this.passwordEncoder = passwordEncoder;
     }
 
+    /**
+     * Autentica un usuari i genera un token JWT si les credencials són vàlides.
+     *
+     * @param request Dades de l'usuari per a l'autenticació (email i contrasenya).
+     * @return Un objecte el token JWT.
+     * @throws EntityNotFoundException Si l'email proporcionat no existeix a la base de dades.
+     */
     @Override
     public JwtAuthenticationDTO login(LoginRequestDTO request){
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
@@ -40,7 +49,27 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         );
     }
 
-//    @Override
+    public UsuariRepositori getUsuariRepositori() {
+        return usuariRepositori;
+    }
+
+    public JwtServiceImpl getJwtService() {
+        return jwtService;
+    }
+
+    public AuthenticationManager getAuthenticationManager() {
+        return authenticationManager;
+    }
+
+    public void setAuthenticationManager(AuthenticationManager authenticationManager) {
+        this.authenticationManager = authenticationManager;
+    }
+
+    public PasswordEncoder getPasswordEncoder() {
+        return passwordEncoder;
+    }
+
+    //    @Override
 //    public JwtAuthenticationResponse register(UsuariDTO usuariDTO) {
 //        if (usuariDTO.getEmail().isEmpty() || usuariDTO.getPassword().isEmpty()) {
 //            throw new IllegalArgumentException("Email and password: MUST NOT BE EMPTY");

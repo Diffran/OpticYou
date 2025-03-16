@@ -20,7 +20,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-
+/**
+ * Configuració de la seguretat de l'aplicació. Diu que ha de filtrar i com.
+ */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -32,6 +34,13 @@ public class SecurityConfig {
         this.usuariService = usuariService;
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
     }
+    /**
+     * Configura la seguretat de l'aplicació. Desactiva CSRF, utilitza la politica stateless,
+     * permet l'accés a rutes específiques sense autenticació i afegeix el filtre JWT.
+     *
+     * @param http El objecte HttpSecurity per configurar la seguretat.
+     * @return El SecurityFilterChain configurat.
+     */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws  Exception{
         http
@@ -53,11 +62,17 @@ public class SecurityConfig {
         return http.build();
     }
 
+    /**
+     * Configura el gestor d'autenticació per a l'aplicació.
+     */
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception{
         return config.getAuthenticationManager();
     }
 
+    /**
+     * Configura el proveïdor d'autenticació amb el usuariService i el passwordEncoder
+     */
     @Bean
     public AuthenticationProvider authenticactionProvider(){
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
@@ -66,6 +81,9 @@ public class SecurityConfig {
         return authenticationProvider;
     }
 
+    /**
+     * Configura el codificador de contrasenyes per l'autenticació. Ara no fa res.
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         //return new BCryptPasswordEncoder();

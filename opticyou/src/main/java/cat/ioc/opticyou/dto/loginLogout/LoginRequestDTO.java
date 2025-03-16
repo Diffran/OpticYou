@@ -3,7 +3,10 @@ package cat.ioc.opticyou.dto.loginLogout;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 
-
+/**
+ * DTO que representa la sol·licitud d'inici de sessió del usuari.
+ * demana el email i la contrasenya.
+ */
 public class LoginRequestDTO {
     @Email
     private String email;

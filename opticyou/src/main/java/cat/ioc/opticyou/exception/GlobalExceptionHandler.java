@@ -11,6 +11,10 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import java.util.Date;
 
+/**
+ * Gestor global d'excepcions per capturar i manejar excepcions.
+ * Retorna una resposta amb un missatge d'error personalitzat.
+ */
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 

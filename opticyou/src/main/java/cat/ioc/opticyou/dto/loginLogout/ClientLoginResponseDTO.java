@@ -1,5 +1,9 @@
 package cat.ioc.opticyou.dto.loginLogout;
 
+/**
+ * DTO que representa la resposta d'inici de sessió per al client
+ * té si ha sigut success, el token creat i el rol del usuari
+ */
 public class ClientLoginResponseDTO {
     private boolean success;
     private String token;

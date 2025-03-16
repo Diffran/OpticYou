@@ -5,6 +5,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+/**
+ * Entitat del token JWT que ha estat revocat i no es pot utilitzar.
+ */
 @Entity
 @Table(name="blacklisted",schema = "opticyou")
 public class JwtBlackList {

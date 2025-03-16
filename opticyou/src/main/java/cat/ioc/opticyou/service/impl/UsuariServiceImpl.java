@@ -14,6 +14,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Gestiona les operacions relacionades amb els usuaris i la BD.
+ */
 @Service
 public class UsuariServiceImpl implements UsuariService {
     @Autowired
@@ -29,6 +32,12 @@ public class UsuariServiceImpl implements UsuariService {
         //TODO: delete Usuari
     }
 
+    /**
+     * busca un usuari pel seu email a la BD i si no el troba llença una exception. torna un DTO per mostrar les dades al endpoint
+     * @param email
+     * @return UsuariDTO
+     * @throws EntityNotFoundException  si no troba el email
+     */
     @Override
     public UsuariDTO getByEmail(String email) {
         return usuariRepositori.findByEmail(email)
@@ -36,6 +45,10 @@ public class UsuariServiceImpl implements UsuariService {
                 .orElseThrow(() -> new EntityNotFoundException("Usuari no trobat amb email: " + email));
     }
 
+    /**
+     * Busca a tots els usuaris guardats a la BD i el retorna en una llista transformats a DTO
+     * @return List<UsuariDTO>
+     */
     @Override
     public List<UsuariDTO> getAll() {
         return usuariRepositori.findAll().stream()
@@ -44,6 +57,10 @@ public class UsuariServiceImpl implements UsuariService {
     }
 
     //seguretat
+    /**
+     *Servei utilitzat pel sistema de seguretat de spring per gestionar els usuaris
+     *
+     */
     @Override
     public UserDetailsService userDetailsService() {
         return new UserDetailsService() {

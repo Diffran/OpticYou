@@ -8,6 +8,9 @@ import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * Configuració de Swagger per mostrar els endpoints de l'API i definir el sistema de seguretat JWT Bearer.
+ */
 @Configuration
 public class SwaggerConfig {
     @Bean

@@ -9,6 +9,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * Usuari de la app, pot ser tant admin, com client o treballador
+ */
 @Entity
 @Table(name="usuari",schema = "opticyou")
 public class Usuari implements UserDetails {
