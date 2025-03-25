@@ -139,7 +139,7 @@ public class JwtServiceImpl implements JwtService {
      * @param token
      * @return boolena
      */
-    private boolean isTokenExpired(String token){
+    boolean isTokenExpired(String token){
         return getExpiration(token).before(new Date());
     }
 }
