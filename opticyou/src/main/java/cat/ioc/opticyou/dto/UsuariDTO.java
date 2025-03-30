@@ -13,16 +13,27 @@ public class UsuariDTO {
     private Long idUsuari;
     private String nom;
     private String email;
+    private String contrasenya;
     private Rol rol;
 
     public UsuariDTO() {
         this.idUsuari = idUsuari;
     }
-    public UsuariDTO(Long idUsuari, String nom, String email, Rol rol) {
+
+    public UsuariDTO(Long idUsuari, String nom, String email, String contrasenya, Rol rol) {
         this.idUsuari = idUsuari;
         this.nom = nom;
         this.email = email;
+        this.contrasenya = contrasenya;
         this.rol = rol;
+    }
+
+    public String getContrasenya() {
+        return contrasenya;
+    }
+
+    public void setContrasenya(String contrasenya) {
+        this.contrasenya = contrasenya;
     }
 
     public String getNom() {

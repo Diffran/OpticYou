@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS opticyou.clinica (
   nom VARCHAR(45) NOT NULL,
   direccio VARCHAR(45),
   telefon VARCHAR(45),
-  horai_opertura VARCHAR(45),
+  horari_opertura VARCHAR(45),
   horari_tancament VARCHAR(45),
   email VARCHAR(45) NOT NULL
 );
@@ -45,15 +45,14 @@ CREATE TABLE IF NOT EXISTS opticyou.clinica (
 DROP TABLE IF EXISTS opticyou.treballador;
 
 CREATE TABLE IF NOT EXISTS opticyou.treballador (
-  idtreballador SERIAL PRIMARY KEY,
-  usuari_idusuari INT NOT NULL,
+  idtreballador INT PRIMARY KEY,
   especialitat VARCHAR(45),
   estat VARCHAR(10) CHECK (estat IN ('actiu', 'inactiu')),
   inici_jornada VARCHAR(45),
   dies_jornada VARCHAR(45),
   fi_jornada VARCHAR(45),
   clinica_idclinica INT,
-  FOREIGN KEY (usuari_idusuari) REFERENCES opticyou.usuari(idusuari) ON DELETE CASCADE,
+  FOREIGN KEY (idtreballador) REFERENCES opticyou.usuari(idusuari) ON DELETE CASCADE,
   FOREIGN KEY (clinica_idclinica) REFERENCES opticyou.clinica(idclinica) ON DELETE SET NULL
 );
 
@@ -74,14 +73,13 @@ CREATE TABLE IF NOT EXISTS opticyou.historial (
 DROP TABLE IF EXISTS opticyou.client;
 
 CREATE TABLE IF NOT EXISTS opticyou.client (
-  idclient SERIAL PRIMARY KEY,
-  usuari_idusuari INT NOT NULL,
+  idclient INT PRIMARY KEY,
   data_naixament DATE,
   sexe VARCHAR(10) CHECK (sexe IN ('Home', 'Dona', 'Altres')),
   telefon VARCHAR(45),
   clinica_idclinica INT,
-  historial_idhistorial INT NOT NULL,
-  FOREIGN KEY (usuari_idusuari) REFERENCES opticyou.usuari(idusuari) ON DELETE CASCADE,
+  historial_idhistorial INT,
+  FOREIGN KEY (idclient) REFERENCES opticyou.usuari(idusuari) ON DELETE CASCADE,
   FOREIGN KEY (clinica_idclinica) REFERENCES opticyou.clinica(idclinica) ON DELETE SET NULL,
   FOREIGN KEY (historial_idhistorial) REFERENCES opticyou.historial(idhistorial) ON DELETE CASCADE
 );

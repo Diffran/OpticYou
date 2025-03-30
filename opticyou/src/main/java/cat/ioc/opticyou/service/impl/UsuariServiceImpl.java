@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
  */
 @Service
 public class UsuariServiceImpl implements UsuariService {
+
     @Autowired
     private UsuariRepositori usuariRepositori;
 

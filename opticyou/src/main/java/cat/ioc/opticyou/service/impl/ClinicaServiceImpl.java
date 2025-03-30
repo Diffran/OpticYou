@@ -52,6 +52,13 @@ public class ClinicaServiceImpl implements ClinicaService {
     }
 
     @Override
+    public Clinica getClinicaById(Long id) {
+        return  clinicaRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("No hi ha cap clinica amb id: " + id));
+    }
+
+
+    @Override
     public List<ClinicaDTO> getAllClinicas(String token) {
         if (jwtService.isTokenExpired(Utils.extractBearerToken(token))) {
             throw new SecurityException("Token expirat o invàlid");

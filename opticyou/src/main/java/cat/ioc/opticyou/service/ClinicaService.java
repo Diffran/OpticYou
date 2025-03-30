@@ -1,6 +1,7 @@
 package cat.ioc.opticyou.service;
 
 import cat.ioc.opticyou.dto.ClinicaDTO;
+import cat.ioc.opticyou.model.Clinica;
 
 import java.util.List;
 
@@ -12,4 +13,5 @@ public interface ClinicaService {
     boolean updateClinica(ClinicaDTO clinicaDTO, String token);
 
     boolean deleteClinica(Long id, String token);
+    Clinica getClinicaById(Long id);
 }

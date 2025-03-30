@@ -14,12 +14,14 @@ import java.util.List;
  */
 @Entity
 @Table(name="usuari",schema = "opticyou")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Usuari implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="idusuari")
     private Long idUsuari;
     private String nom;
+    @Column(unique = true)
     private String email;
     private String contrasenya;
     @Enumerated(EnumType.STRING)
