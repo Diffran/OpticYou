@@ -50,9 +50,8 @@ public class ClientServiceImpl implements ClientService {
 
             clientRepository.save(client);
             return 1;
-        } else {
-            return 0;
         }
+            return 0;
     }
 
     @Override
@@ -67,9 +66,15 @@ public class ClientServiceImpl implements ClientService {
             } else {
                 throw new EntityNotFoundException("No hi ha cap clinica amb id: " + id);
             }
-        } else {
-            throw new SecurityException("Token expirat o no ADMIN");
         }
+        throw new SecurityException("Token expirat o no ADMIN");
+    }
+
+    @Override
+    public Client getClientById(Long id){
+        Optional<Client> client = clientRepository.findById(id);
+
+        return client.get();
     }
 
     @Override
@@ -81,9 +86,8 @@ public class ClientServiceImpl implements ClientService {
             return clients.stream()
                     .map(ClientMapper::toDto)
                     .collect(Collectors.toList());
-        } else {
-            throw new SecurityException("Token expirat o no ADMIN");
         }
+        throw new SecurityException("Token expirat o no ADMIN");
     }
 
     @Override
@@ -105,9 +109,8 @@ public class ClientServiceImpl implements ClientService {
             clientRepository.save(c);
             return true;
 
-        } else {
-            throw new SecurityException("Token expirat o no ADMIN");
         }
+        throw new SecurityException("Token expirat o no ADMIN");
     }
 
     @Override
@@ -130,8 +133,7 @@ public class ClientServiceImpl implements ClientService {
                 return 1;
             }
             return 0;
-        } else {
-            throw new SecurityException("Token expirat o no ADMIN");
         }
+        throw new SecurityException("Token expirat o no ADMIN");
     }
 }
