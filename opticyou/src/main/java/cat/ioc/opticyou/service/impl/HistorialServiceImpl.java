@@ -16,6 +16,24 @@ public class HistorialServiceImpl {//falta la interfaz implements
     @Autowired
     HistorialRepository historialRepository;
 
+    public int createHistorial(Historial historial, String token) {
+        historialRepository.save(historial);
+        return 1;
+    }
+    public Historial getHistorialById(Long id, String token){
+        return  historialRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("No hi ha cap historial amb id: " + id));
+    }
+    public boolean deleteHistorial(Long id, String token){
+        historialRepository.deleteById(id);
+        Historial h =   historialRepository.findById(id)
+                .orElse(null);
+        if(h == null){
+            return false;
+        }
+        return true;
+    }
+
     public int createHistorial(Historial historial) {
             historialRepository.save(historial);
             return 1;
@@ -24,7 +42,6 @@ public class HistorialServiceImpl {//falta la interfaz implements
         return  historialRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("No hi ha cap historial amb id: " + id));
     }
-
     public boolean deleteHistorial(Long id){
         historialRepository.deleteById(id);
         Historial h =   historialRepository.findById(id)
@@ -34,4 +51,5 @@ public class HistorialServiceImpl {//falta la interfaz implements
         }
         return true;
     }
+
 }
