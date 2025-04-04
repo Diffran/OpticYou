@@ -13,5 +13,5 @@ public interface HistorialService {
     int createHistorial(Historial historial);
     int createHistorial(HistorialDTO historialDTO, String token);
     boolean updateHistorial(HistorialDTO historialDTO, String token);
-    List<HistorialDTO> getAllHistotialByClinica(Long clinicaId, String token);
+    List<HistorialDTO> getAllHistorial(String token);
 }

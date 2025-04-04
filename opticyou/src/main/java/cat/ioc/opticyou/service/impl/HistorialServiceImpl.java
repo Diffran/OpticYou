@@ -14,9 +14,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
-public class HistorialServiceImpl implements HistorialService {//falta la interfaz implements
+public class HistorialServiceImpl implements HistorialService {
     @Autowired
     private HistorialRepository historialRepository;
     @Autowired
@@ -27,7 +28,7 @@ public class HistorialServiceImpl implements HistorialService {//falta la interf
     @Override
     public int createHistorial(HistorialDTO historialDTO, String token) {
         if (!jwtService.isTokenExpired(Utils.extractBearerToken(token)) && Rol.ADMIN == jwtService.getRolFromToken(Utils.extractBearerToken(token))){
-            historialRepository.save(HistorialMapper.toEntity(historialDTO, clientServiceImpl));
+            historialRepository.save(HistorialMapper.toEntity(historialDTO, clientServiceImpl.getClientById(historialDTO.getIdClient())));
             return 1;
         }
         return 0;
@@ -61,15 +62,21 @@ public class HistorialServiceImpl implements HistorialService {//falta la interf
             if(!historial.isPresent()){
                 return false;
             }
-            historialRepository.save(HistorialMapper.toEntity(historialDTO, clientServiceImpl));
+            historialRepository.save(HistorialMapper.toEntity(historialDTO, clientServiceImpl.getClientById(historialDTO.getIdClient())));
             return true;
         }
         throw new SecurityException("Token expirat o no ADMIN");
      }
 
      @Override
-     public List<HistorialDTO> getAllHistorialByClinica(Long clinicaId, String token){
-//  TODO: implementar
+     public List<HistorialDTO> getAllHistorial(String token){
+         if (!jwtService.isTokenExpired(Utils.extractBearerToken(token)) && Rol.ADMIN == jwtService.getRolFromToken(Utils.extractBearerToken(token))){
+            List<Historial> historials = historialRepository.findAll();
+            return historials.stream()
+                    .map(HistorialMapper::toDto)
+                    .collect(Collectors.toList());
+         }
+         throw new SecurityException("Token expirat o no ADMIN");
      }
     @Override
     public int createHistorial(Historial historial) {

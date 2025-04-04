@@ -11,6 +11,4 @@ import java.util.List;
 
 @Repository
 public interface HistorialRepository extends JpaRepository<Historial,Long> {
-    @Query("SELECT c FROM Client c WHERE c.sexe = :sexe")// TODO: fer bé la query
-    List<HistorialDTO> findClientsBySexe(@Param("id") Long clinicaId);
 }
