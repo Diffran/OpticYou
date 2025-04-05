@@ -7,11 +7,11 @@ import java.util.List;
 
 public interface HistorialService {
     boolean deleteHistorial(Long id);
-    boolean deleteHistorial(Long id, String token);
+//    boolean deleteHistorial(Long id, String token);
     Historial getHistorialById(Long id);
     HistorialDTO getHistorialById(Long id, String token);
     int createHistorial(Historial historial);
-    int createHistorial(HistorialDTO historialDTO, String token);
-    boolean updateHistorial(HistorialDTO historialDTO, String token);
-    List<HistorialDTO> getAllHistorial(String token);
+//    int createHistorial(HistorialDTO historialDTO, String token);
+//    boolean updateHistorial(HistorialDTO historialDTO, String token);
+//    List<HistorialDTO> getAllHistorial(String token);
 }

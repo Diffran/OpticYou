@@ -20,64 +20,58 @@ import java.util.stream.Collectors;
 public class HistorialServiceImpl implements HistorialService {
     @Autowired
     private HistorialRepository historialRepository;
-    @Autowired
-    private ClientServiceImpl clientServiceImpl;
-    @Autowired
-    private JwtServiceImpl jwtService;
 
-    @Override
-    public int createHistorial(HistorialDTO historialDTO, String token) {
-        if (!jwtService.isTokenExpired(Utils.extractBearerToken(token)) && Rol.ADMIN == jwtService.getRolFromToken(Utils.extractBearerToken(token))){
-            historialRepository.save(HistorialMapper.toEntity(historialDTO, clientServiceImpl.getClientById(historialDTO.getIdClient())));
-            return 1;
-        }
-        return 0;
-    }
+//    @Override
+//    public int createHistorial(HistorialDTO historialDTO, String token) {
+//        if (!jwtService.isTokenExpired(Utils.extractBearerToken(token)) && Rol.ADMIN == jwtService.getRolFromToken(Utils.extractBearerToken(token))){
+//            historialRepository.save(HistorialMapper.toEntity(historialDTO, null));
+//            return 1;
+//        }
+//        return 0;
+//    }
     @Override
     public HistorialDTO getHistorialById(Long id, String token){
-        if (!jwtService.isTokenExpired(Utils.extractBearerToken(token)) && Rol.ADMIN == jwtService.getRolFromToken(Utils.extractBearerToken(token))){
             Historial historial =   historialRepository.findById(id)
                     .orElseThrow(() -> new EntityNotFoundException("No hi ha cap historial amb id: " + id));
             return HistorialMapper.toDto(historial);
-        }
-        throw new SecurityException("Token expirat o no ADMIN");
-    }
-    @Override
-    public boolean deleteHistorial(Long id, String token){
-        if (!jwtService.isTokenExpired(Utils.extractBearerToken(token)) && Rol.ADMIN == jwtService.getRolFromToken(Utils.extractBearerToken(token))){
-            historialRepository.deleteById(id);
-            Historial h =   historialRepository.findById(id)
-                    .orElse(null);
-            if(h == null){
-                return false;
-            }
-            return true;
-        }
-        throw new SecurityException("Token expirat o no ADMIN");
-    }
-    @Override
-    public boolean updateHistorial(HistorialDTO historialDTO, String token){
-        if (!jwtService.isTokenExpired(Utils.extractBearerToken(token)) && Rol.ADMIN == jwtService.getRolFromToken(Utils.extractBearerToken(token))){
-            Optional<Historial> historial = historialRepository.findById(historialDTO.getIdhistorial());
-            if(!historial.isPresent()){
-                return false;
-            }
-            historialRepository.save(HistorialMapper.toEntity(historialDTO, clientServiceImpl.getClientById(historialDTO.getIdClient())));
-            return true;
-        }
-        throw new SecurityException("Token expirat o no ADMIN");
-     }
 
-     @Override
-     public List<HistorialDTO> getAllHistorial(String token){
-         if (!jwtService.isTokenExpired(Utils.extractBearerToken(token)) && Rol.ADMIN == jwtService.getRolFromToken(Utils.extractBearerToken(token))){
-            List<Historial> historials = historialRepository.findAll();
-            return historials.stream()
-                    .map(HistorialMapper::toDto)
-                    .collect(Collectors.toList());
-         }
-         throw new SecurityException("Token expirat o no ADMIN");
-     }
+    }
+//    @Override
+//    public boolean deleteHistorial(Long id, String token){
+//        if (!jwtService.isTokenExpired(Utils.extractBearerToken(token)) && Rol.ADMIN == jwtService.getRolFromToken(Utils.extractBearerToken(token))){
+//            historialRepository.deleteById(id);
+//            Historial h =   historialRepository.findById(id)
+//                    .orElse(null);
+//            if(h == null){
+//                return false;
+//            }
+//            return true;
+//        }
+//        throw new SecurityException("Token expirat o no ADMIN");
+//    }
+//    @Override
+//    public boolean updateHistorial(HistorialDTO historialDTO, String token){
+//        if (!jwtService.isTokenExpired(Utils.extractBearerToken(token)) && Rol.ADMIN == jwtService.getRolFromToken(Utils.extractBearerToken(token))){
+//            Optional<Historial> historial = historialRepository.findById(historialDTO.getIdhistorial());
+//            if(!historial.isPresent()){
+//                return false;
+//            }
+//            historialRepository.save(HistorialMapper.toEntity(historialDTO, null));
+//            return true;
+//        }
+//        throw new SecurityException("Token expirat o no ADMIN");
+//     }
+
+//     @Override
+//     public List<HistorialDTO> getAllHistorial(String token){
+//         if (!jwtService.isTokenExpired(Utils.extractBearerToken(token)) && Rol.ADMIN == jwtService.getRolFromToken(Utils.extractBearerToken(token))){
+//            List<Historial> historials = historialRepository.findAll();
+//            return historials.stream()
+//                    .map(HistorialMapper::toDto)
+//                    .collect(Collectors.toList());
+//         }
+//         throw new SecurityException("Token expirat o no ADMIN");
+//     }
     @Override
     public int createHistorial(Historial historial) {
             historialRepository.save(historial);
