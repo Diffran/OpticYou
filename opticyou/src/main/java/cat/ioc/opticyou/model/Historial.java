@@ -1,5 +1,6 @@
 package cat.ioc.opticyou.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -18,6 +19,7 @@ public class Historial {
     private String patologies;
 
     @OneToOne(mappedBy = "historial", cascade = CascadeType.ALL)
+    @JsonIgnore
     private Client client;
 
     public Historial() {

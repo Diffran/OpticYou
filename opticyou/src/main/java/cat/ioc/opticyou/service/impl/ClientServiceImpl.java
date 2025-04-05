@@ -70,12 +70,6 @@ public class ClientServiceImpl implements ClientService {
         throw new SecurityException("Token expirat o no ADMIN");
     }
 
-    @Override
-    public Client getClientById(Long id){
-        Optional<Client> client = clientRepository.findById(id);
-
-        return client.get();
-    }
 
     @Override
     public List<ClientDTO> getAllClients(String token) {
