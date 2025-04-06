@@ -5,6 +5,12 @@ import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
+/**
+ * Classe que representa l'historial d'un client.
+ * Conté informació sobre les patologies del client i la data de creació.
+ * Cada client té un historial associat, que és únic per a cada client.
+ * Les actualitzacions d'aquest historial es realitzen en cascada a través de la relació amb la classe Client.
+ */
 @Entity
 @Table(name = "historial", schema = "opticyou")
 public class Historial {

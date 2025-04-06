@@ -11,6 +11,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Controlador de clients.
+ * Gestiona les operacions relacionades amb els clients com crear, obtenir, actualitzar i eliminar.
+ */
 @RestController
 @RequestMapping("/client")
 public class ClientController {
@@ -22,6 +26,14 @@ public class ClientController {
     }
     public ClientController(){}
 
+    /**
+     * Crea un nou client.
+     * Aquest mètode rep les dades del client, crea un client en la base de dades i retorna una resposta segons el resultat.
+     *
+     * @param clientDTO  Les dades del client a crear.
+     * @param token      El token d'autenticació per verificar l'usuari.
+     * @return           Resposta HTTP amb l'estat de la creació del client.
+     */
     @PostMapping
     public ResponseEntity<?> createClient(@RequestBody ClientDTO clientDTO, @RequestHeader("Authorization") String token) {
        try{
@@ -35,6 +47,14 @@ public class ClientController {
        }
     }
 
+    /**
+     * Obté un client per la seva ID.
+     * Aquest mètode recupera les dades d'un client mitjançant la seva ID i retorna les dades del client en format DTO.
+     *
+     * @param id     La ID del client a obtenir.
+     * @param token  El token d'autenticació per verificar l'usuari.
+     * @return       Resposta HTTP amb les dades del client si es troba, o un error en cas contrari.
+     */
     @GetMapping("/{id}")
     public ResponseEntity<?> getClientByID(
             @PathVariable Long id,
@@ -47,6 +67,13 @@ public class ClientController {
         }
     }
 
+    /**
+     * Obté tots els clients.
+     * Aquest mètode recupera la llista de tots els clients registrats i retorna la llista en format DTO.
+     *
+     * @param token  El token d'autenticació per verificar l'usuari.
+     * @return       Resposta HTTP amb la llista de clients si es troben disponibles, o un error en cas contrari.
+     */
     @GetMapping
     public ResponseEntity<?> getAllClients(@RequestHeader("Authorization") String token) {
         try {
@@ -57,6 +84,15 @@ public class ClientController {
         }
     }
 
+    /**
+     * Actualitza un client.
+     * Aquest mètode permet actualitzar les dades d'un client, però no permet modificar ni el ID del client ni la contrasenya.
+     * El client es busca per ID i es realitza la modificació de les seves dades.
+     *
+     * @param clientDTO El DTO que conté les dades actualitzades del client.
+     * @param token     El token d'autenticació per verificar l'usuari.
+     * @return          Resposta HTTP amb un missatge de confirmació si l'actualització va ser exitosa o un error si no es va trobar el client.
+     */
     @Operation(
             summary = "No permet modificar ni el idUsuari ni la contrasenya!"
     )
@@ -75,6 +111,17 @@ public class ClientController {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
         }
     }
+
+    /**
+     * Elimina un client per ID.
+     * Aquest mètode elimina un client del sistema segons el seu ID.
+     * Si el client no es troba, es retorna un error 404. Si es troba i s'eliminen les dades correctament, es retorna una resposta 200.
+     * En cas de problemes amb l'eliminació, es retorna un error 500.
+     *
+     * @param id    L'ID del client a eliminar.
+     * @param token El token d'autenticació per verificar l'usuari.
+     * @return      Resposta HTTP amb el missatge d'èxit o error corresponent.
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteClinica(@PathVariable Long id, @RequestHeader("Authorization") String token) {
         try {

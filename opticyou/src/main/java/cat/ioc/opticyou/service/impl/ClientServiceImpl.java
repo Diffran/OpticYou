@@ -20,6 +20,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * Gestiona els processos relacionats amb els clients, com la creació, actualització i eliminació.
+ * Utilitza els repositoris corresponents per interactuar amb la base de dades.
+ */
 @Service
 public class ClientServiceImpl implements ClientService {
     @Autowired
@@ -33,6 +37,15 @@ public class ClientServiceImpl implements ClientService {
     @Autowired
     private ClinicaService clinicaService;
 
+    /**
+     * Crea un client i l'associa a un historial i a una clínica.
+     * Aquesta operació només es pot realitzar per un usuari amb rol d'admin.
+     * Si el token JWT és vàlid i l'usuari és administrador, es crea un client amb un historial bàsic.
+     *
+     * @param clientdto Les dades del client a crear.
+     * @param token     El token JWT d'autenticació.
+     * @return          1 si el client es crea correctament, 0 en cas contrari.
+     */
     @Override
     public int createClient(ClientDTO clientdto, String token) {
         if (!jwtService.isTokenExpired(Utils.extractBearerToken(token)) && Rol.ADMIN == jwtService.getRolFromToken(Utils.extractBearerToken(token))) {
@@ -54,6 +67,17 @@ public class ClientServiceImpl implements ClientService {
             return 0;
     }
 
+    /**
+     * Obté un client per ID. Aquesta operació només es pot realitzar per un usuari amb rol d'admin.
+     * Si el token JWT és vàlid i l'usuari és administrador, es retorna el client amb l'ID indicat.
+     * Si el client no es troba, es llença una excepció.
+     *
+     * @param id    L'ID del client a obtenir.
+     * @param token El token JWT d'autenticació.
+     * @return      El client convertit a un ClientDTO.
+     * @throws SecurityException Si el token és expirat o l'usuari no té rol d'admin.
+     * @throws EntityNotFoundException Si no es troba el client amb l'ID especificat.
+     */
     @Override
     public ClientDTO getClientById(Long id, String token) {
         if (!jwtService.isTokenExpired(Utils.extractBearerToken(token)) &&
@@ -70,7 +94,15 @@ public class ClientServiceImpl implements ClientService {
         throw new SecurityException("Token expirat o no ADMIN");
     }
 
-
+    /**
+     * Obté una llista de tots els clients. Aquesta operació només es pot realitzar per un usuari amb rol d'admin.
+     * Si el token JWT és vàlid i l'usuari és administrador, es retorna la llista de clients.
+     * En cas contrari, es llença una excepció de seguretat.
+     *
+     * @param token El token JWT d'autenticació.
+     * @return      Una llista de Clients convertits a ClientDTO.
+     * @throws SecurityException Si el token és expirat o l'usuari no té rol d'admin.
+     */
     @Override
     public List<ClientDTO> getAllClients(String token) {
         if (!jwtService.isTokenExpired(Utils.extractBearerToken(token)) &&
@@ -84,6 +116,16 @@ public class ClientServiceImpl implements ClientService {
         throw new SecurityException("Token expirat o no ADMIN");
     }
 
+    /**
+     * Actualitza les dades d'un client existent. Aquesta operació només es pot realitzar per un usuari amb rol d'admin.
+     * Si el token JWT és vàlid i l'usuari és administrador, es realitza l'actualització de les dades del client.
+     * En cas contrari, es llença una excepció de seguretat.
+     *
+     * @param clientdto Els nous detalls del client a actualitzar.
+     * @param token     El token JWT d'autenticació.
+     * @return          Retorna un valor boolean que indica si l'actualització s'ha realitzat amb èxit.
+     * @throws SecurityException Si el token és expirat o l'usuari no té rol d'admin.
+     */
     @Override
     public boolean updateClient(ClientDTO clientdto, String token) {
         if (!jwtService.isTokenExpired(Utils.extractBearerToken(token)) &&
@@ -107,6 +149,16 @@ public class ClientServiceImpl implements ClientService {
         throw new SecurityException("Token expirat o no ADMIN");
     }
 
+    /**
+     * Elimina un client de la base de dades. Aquesta operació només es pot realitzar per un usuari amb rol d'admin.
+     * Si el token JWT és vàlid i l'usuari és administrador, es procedeix a eliminar el client juntament amb el seu historial
+     * i l'usuari associat. En cas contrari, es llença una excepció de seguretat.
+     *
+     * @param id     L'identificador del client a eliminar.
+     * @param token  El token JWT d'autenticació.
+     * @return       Retorna -1 si el client no existeix, 1 si l'eliminació és exitosa, i 0 si no s'ha pogut eliminar.
+     * @throws SecurityException Si el token és expirat o l'usuari no té rol d'admin.
+     */
     @Override
     public int deleteClient(Long id, String token) {
         if (!jwtService.isTokenExpired(Utils.extractBearerToken(token)) &&

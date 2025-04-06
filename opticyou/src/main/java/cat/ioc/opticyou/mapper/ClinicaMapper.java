@@ -5,7 +5,15 @@ import cat.ioc.opticyou.dto.UsuariDTO;
 import cat.ioc.opticyou.model.Clinica;
 import cat.ioc.opticyou.model.Usuari;
 
+/**
+ * Classe per mapejar entre Clinica i ClinicaDTO
+ */
 public class ClinicaMapper {
+    /**
+     * Converteix una Clínica a ClinicaDTO
+     * @param clinica La clínica a convertir
+     * @return ClinicaDTO
+     */
     public static ClinicaDTO toDto(Clinica clinica){
         if (clinica == null) {
             return null;
@@ -21,6 +29,11 @@ public class ClinicaMapper {
         return clinicaDTO;
     }
 
+    /**
+     * Converteix un ClinicaDTO a Clínica
+     * @param clinicaDTO El ClinicaDTO a convertir
+     * @return Clínica
+     */
     public static Clinica toEntity(ClinicaDTO clinicaDTO){
         if (clinicaDTO == null) {
             return null;

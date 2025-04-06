@@ -3,6 +3,12 @@ package cat.ioc.opticyou.dto;
 import cat.ioc.opticyou.model.Client;
 import cat.ioc.opticyou.util.Rol;
 
+/**
+ * DTO que representa la informació d'un client.
+ * Extén la classe UsuariDTO i afegeix informació específica del client com el telèfon,
+ * sexe, data de naixement, contrasenya, ID de la clínica i ID de l'historial.
+ * Mai mostra la contrasenya a les respostes.
+ */
 public class ClientDTO extends UsuariDTO{
     private String telefon;
     private String sexe;

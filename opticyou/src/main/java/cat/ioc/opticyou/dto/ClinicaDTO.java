@@ -2,6 +2,11 @@ package cat.ioc.opticyou.dto;
 
 import java.util.Objects;
 
+/**
+ * DTO que representa la informació d'una clínica.
+ * Conté l'ID de la clínica, el nom, la direcció, el telèfon, l'horari d'obertura,
+ * l'horari de tancament i l'email de la clínica.
+ */
 public class ClinicaDTO {
     private Long idClinica;
     private String nom;

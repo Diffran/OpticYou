@@ -3,6 +3,9 @@ package cat.ioc.opticyou.model;
 import cat.ioc.opticyou.util.Rol;
 import jakarta.persistence.*;
 
+/**
+ * Classe que representa la informació d'una clínica.
+ */
 @Entity
 @Table(name="clinica",schema = "opticyou")
 public class Clinica {

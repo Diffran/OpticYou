@@ -5,6 +5,10 @@ import jakarta.persistence.*;
 
 import java.util.Objects;
 
+/**
+ * Client de l'aplicació, hereta de la classe Usuari.
+ * Pot tenir informació específica com telèfon, sexe, data de naixement, etc.
+ */
 @Entity
 @Table(name="client",schema="opticyou")
 @PrimaryKeyJoinColumn(name = "idclient")
