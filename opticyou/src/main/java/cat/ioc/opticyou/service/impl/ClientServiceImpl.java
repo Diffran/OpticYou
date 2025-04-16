@@ -88,7 +88,7 @@ public class ClientServiceImpl implements ClientService {
             if (client.isPresent()) {
                 return ClientMapper.toDto(client.get());
             } else {
-                throw new EntityNotFoundException("No hi ha cap clinica amb id: " + id);
+                throw new EntityNotFoundException("No hi ha cap client amb id: " + id);
             }
         }
         throw new SecurityException("Token expirat o no ADMIN");
