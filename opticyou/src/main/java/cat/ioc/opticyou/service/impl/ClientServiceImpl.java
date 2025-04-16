@@ -13,6 +13,8 @@ import cat.ioc.opticyou.util.Rol;
 import cat.ioc.opticyou.util.Utils;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,6 +38,8 @@ public class ClientServiceImpl implements ClientService {
     private JwtServiceImpl jwtService;
     @Autowired
     private ClinicaService clinicaService;
+    @Autowired
+    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     /**
      * Crea un client i l'associa a un historial i a una clínica.
@@ -60,6 +64,7 @@ public class ClientServiceImpl implements ClientService {
             client.setHistorial(historial);
             //treure qualsevol id perque ho faci automaticament spring
             client.setIdUsuari(null);
+            client.setContrasenya(passwordEncoder.encode(client.getPassword()));
 
             clientRepository.save(client);
             return 1;

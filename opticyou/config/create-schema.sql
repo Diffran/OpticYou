@@ -165,3 +165,9 @@ CREATE TABLE IF NOT EXISTS opticyou.pauta (
   FOREIGN KEY (medicacio_idmedicacio) REFERENCES opticyou.medicacio(idmedicacio) ON DELETE SET NULL,
   FOREIGN KEY (diagnostic_iddiagnostic) REFERENCES opticyou.diagnostic(iddiagnostic) ON DELETE CASCADE
 );
+-- -----------------------------------------------------
+-- crea l'usuari administrador a la BD contrasenya "admin123"
+-- -----------------------------------------------------
+INSERT INTO opticyou.usuari (nom, email, contrasenya, rol)
+VALUES ('admin', 'admin@exemple.com', '$2a$10$DZNCWK4tNzXL23utCi/KQezKsg1is4K7e7kRN5xuEx6eRABHcjNgC', 'ADMIN');
+

@@ -25,12 +25,12 @@ public class UsuariServiceImpl implements UsuariService {
 
     @Override
     public void update(String email) {
-        //TODO: update data from user
+        //no implementat no cal
     }
 
     @Override
     public void delete(String email) {
-        //TODO: delete Usuari
+        //no implementat no cal
     }
 
     /**

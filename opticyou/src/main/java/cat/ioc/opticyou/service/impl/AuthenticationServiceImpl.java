@@ -20,14 +20,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final UsuariRepositori usuariRepositori;
     private final JwtServiceImpl jwtService;
     private AuthenticationManager authenticationManager;
-    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public AuthenticationServiceImpl(UsuariRepositori usuariRepositori, JwtServiceImpl jwtService, AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder) {
+    public AuthenticationServiceImpl(UsuariRepositori usuariRepositori, JwtServiceImpl jwtService, AuthenticationManager authenticationManager) {
         this.usuariRepositori = usuariRepositori;
         this.jwtService = jwtService;
         this.authenticationManager = authenticationManager;
-       this.passwordEncoder = passwordEncoder;
     }
 
     /**
@@ -64,41 +62,5 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public void setAuthenticationManager(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
     }
-
-    public PasswordEncoder getPasswordEncoder() {
-        return passwordEncoder;
-    }
-
-    //    @Override
-//    public JwtAuthenticationResponse register(UsuariDTO usuariDTO) {
-//        if (usuariDTO.getEmail().isEmpty() || usuariDTO.getPassword().isEmpty()) {
-//            throw new IllegalArgumentException("Email and password: MUST NOT BE EMPTY");
-//        }
-//        usuariRepositori.findByEmail(request.getEmail())
-//                .ifPresent(user -> {
-//                    throw new EntityExistsException("Auth User failed: '"+user.getEmail()+"' -> ALREADY EXIST in DataBase" );
-//                });
-//
-//        UsuariDTO userDTO = UsuariDTO()
-//
-//                .builder()
-//                .email(request.getEmail())
-//                .password(passwordEncoder.encode(request.getPassword()))
-//                .build();
-//
-//        User user = UserMapper.toEntity(userDTO);
-//        if(userIRepository.findAll().isEmpty()){
-//            user.setRole(Role.ADMIN);
-//        }
-//
-//        userIRepository.save(user);
-//        PlayerDTO defaultPlayer = new PlayerDTO(user.getId(),null,0);
-//        playerService.create(defaultPlayer);
-//
-//        return JwtAuthenticationResponse.builder()
-//                .token(jwtService.getToken(user))
-//                .userId(user.getId())
-//                .build();
-//    }
 
 }
