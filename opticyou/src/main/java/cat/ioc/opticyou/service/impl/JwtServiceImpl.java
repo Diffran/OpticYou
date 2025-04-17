@@ -142,4 +142,9 @@ public class JwtServiceImpl implements JwtService {
     public boolean isTokenExpired(String token){
         return getExpiration(token).before(new Date());
     }
+
+    @Override
+    public Long getIdFromToken(String token) {
+        return getClaim(token, claims -> claims.get("usuari_id", Integer.class)).longValue();
+    }
 }

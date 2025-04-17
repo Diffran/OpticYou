@@ -55,6 +55,9 @@ public class ClientController {
      * @param token  El token d'autenticació per verificar l'usuari.
      * @return       Resposta HTTP amb les dades del client si es troba, o un error en cas contrari.
      */
+    @Operation(
+            summary = "per admin i client, admin qualsevol i client només a si mateix, ignora param id"
+    )
     @GetMapping("/{id}")
     public ResponseEntity<?> getClientByID(
             @PathVariable Long id,
@@ -132,6 +135,64 @@ public class ClientController {
                 return ResponseEntity.status(HttpStatus.OK).body("Client eliminat correctament");
             }
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("no s'ha pogut eliminar el client");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
+        }
+    }
+
+    /**
+     * Actualitza les dades d’un client autenticat amb rol CLIENT.
+     *
+     * Aquest mètode permet al client modificar les seves pròpies dades,
+     * excepte el seu identificador (idUsuari), la clínica assignada i l’historial mèdic.
+     * També pot modificar la contrasenya si s’indica una de nova.
+     *
+     * @param clientDTO DTO amb les dades actualitzades del client.
+     * @param token     Token d’autenticació JWT del client.
+     * @return          Resposta HTTP amb un missatge d’èxit si s’ha actualitzat correctament,
+     *                  o amb un missatge d’error si no s’ha trobat el client o si el token no és vàlid.
+     */
+    @Operation(
+            summary = "No permet modificar ni el idUsuari, historial o clinica"
+    )
+    @PutMapping("/update_client")
+    public ResponseEntity<?> updateClient(
+            @RequestBody ClientDTO clientDTO,
+            @RequestHeader("Authorization") String token
+    ) {
+        try {
+            boolean updated = clientService.updateClientClient(clientDTO, token);
+            if (!updated) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No s'ha trobat el client amb ID: " + clientDTO.getIdUsuari());
+            }
+            return ResponseEntity.ok("Client actualitzat correctament");
+        } catch (SecurityException e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
+        }
+    }
+
+    /**
+     * Permet que un client es pugui eliminar a si mateix.
+     * Aquest mètode utilitza el token d'autenticació per identificar el client i procedir a la seva eliminació.
+     * Si el client no es troba, retorna un error. Si l'eliminació és exitosa, retorna un missatge de confirmació.
+     *
+     * @param token El token d'autenticació que permet identificar el client que vol eliminar el seu compte.
+     * @return Resposta HTTP amb un missatge de confirmació o error depenent de l'estat de l'eliminació.
+     * @throws SecurityException Si el token és invàlid o caducat, o si el client no està autoritzat.
+     */
+    @Operation(
+            summary = "Permet que un client es pugui eliminar a si mateix"
+    )
+    @DeleteMapping("/delete_client")
+    public ResponseEntity<?> deleteClient(@RequestHeader("Authorization") String token) {
+        try {
+            int status = clientService.deleteClientClient(token);
+            if (status == -1) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No s'ha trobat el client autenticat.");
+            } else if (status == 1) {
+                return ResponseEntity.status(HttpStatus.OK).body("Client eliminat correctament.");
+            }
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No s'ha pogut eliminar el client.");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
         }

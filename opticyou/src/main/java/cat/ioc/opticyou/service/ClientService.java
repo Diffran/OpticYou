@@ -14,4 +14,6 @@ public interface ClientService {
     boolean updateClient(ClientDTO clientDTO, String token);
 
     int deleteClient(Long id, String token);
+    boolean updateClientClient(ClientDTO clientdto,String token);
+    int deleteClientClient(String token);
 }
