@@ -27,7 +27,6 @@ public class Client extends Usuari {
     public Client(){}
 
     public Client(String telefon, String sexe, String dataNaixament, Clinica clinica, Historial historial) {
-
         this.telefon = telefon;
         this.sexe = sexe;
         this.dataNaixament = dataNaixament;
