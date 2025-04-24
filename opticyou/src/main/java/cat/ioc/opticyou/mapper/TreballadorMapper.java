@@ -20,9 +20,9 @@ public class TreballadorMapper {
         treballadorDTO.setIdUsuari(treballador.getIdUsuari());
         treballadorDTO.setNom(treballador.getNom());
         treballadorDTO.setEmail(treballador.getEmail());
-        treballadorDTO.setRol(Rol.TREBALLADOR);  // Aquí assumeixo que tens un Rol.TREBALLADOR
+        treballadorDTO.setRol(Rol.TREBALLADOR);
         treballadorDTO.setEspecialitat(treballador.getEspecialitat());
-        treballadorDTO.setEstat(treballador.getEstat().name());  // Si utilitzes Enum, convindria passar-lo a String
+        treballadorDTO.setEstat(treballador.getEstat());
         treballadorDTO.setIniciJornada(treballador.getIniciJornada());
         treballadorDTO.setDiesJornada(treballador.getDiesJornada());
         treballadorDTO.setFiJornada(treballador.getFiJornada());
@@ -46,7 +46,7 @@ public class TreballadorMapper {
         treballador.setContrasenya(treballadorDTO.getContrasenya());
         treballador.setRol(Rol.TREBALLADOR);
         treballador.setEspecialitat(treballadorDTO.getEspecialitat());
-        treballador.setEstat(EstatTreballador.valueOf(treballadorDTO.getEstat().toUpperCase()));  // Convertir de String a Enum
+        treballador.setEstat(treballadorDTO.getEstat());
         treballador.setIniciJornada(treballadorDTO.getIniciJornada());
         treballador.setDiesJornada(treballadorDTO.getDiesJornada());
         treballador.setFiJornada(treballadorDTO.getFiJornada());

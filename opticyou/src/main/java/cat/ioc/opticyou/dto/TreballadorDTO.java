@@ -1,5 +1,8 @@
 package cat.ioc.opticyou.dto;
 
+import cat.ioc.opticyou.util.EstatTreballador;
+import cat.ioc.opticyou.util.Rol;
+
 import java.util.Objects;
 
 /**
@@ -7,12 +10,12 @@ import java.util.Objects;
  * Conté l'ID del treballador, el nom, l'email, l'especialitat, l'estat (actiu/inactiu),
  * l'horari d'inici, els dies de la jornada, l'horari de fi de jornada, i l'ID de la clínica associada.
  */
-public class TreballadorDTO {
+public class TreballadorDTO extends UsuariDTO{
     private Long idUsuari;
     private String nom;
     private String email;
     private String especialitat;
-    private String estat;  // Estat pot ser 'actiu' o 'inactiu' (en minúscules)
+    private EstatTreballador estat;  // Estat pot ser 'actiu' o 'inactiu' (en minúscules)
     private String iniciJornada;
     private String diesJornada;
     private String fiJornada;
@@ -21,10 +24,11 @@ public class TreballadorDTO {
     public TreballadorDTO() {
     }
 
-    public TreballadorDTO(Long idUsuari, String nom, String email, String especialitat, String estat, String iniciJornada, String diesJornada, String fiJornada, Long clinicaId) {
-        this.idUsuari = idUsuari;
-        this.nom = nom;
-        this.email = email;
+    public TreballadorDTO(Long idUsuari, String nom, String email, String contrasenya, Rol rol, Long idUsuari1, String nom1, String email1, String especialitat, EstatTreballador estat, String iniciJornada, String diesJornada, String fiJornada, Long clinicaId) {
+        super(idUsuari, nom, email, contrasenya, rol);
+        this.idUsuari = idUsuari1;
+        this.nom = nom1;
+        this.email = email1;
         this.especialitat = especialitat;
         this.estat = estat;
         this.iniciJornada = iniciJornada;
@@ -65,11 +69,11 @@ public class TreballadorDTO {
         this.especialitat = especialitat;
     }
 
-    public String getEstat() {
+    public EstatTreballador getEstat() {
         return estat;
     }
 
-    public void setEstat(String estat) {
+    public void setEstat(EstatTreballador estat) {
         this.estat = estat;
     }
 
