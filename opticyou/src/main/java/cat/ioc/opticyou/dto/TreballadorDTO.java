@@ -1,6 +1,5 @@
 package cat.ioc.opticyou.dto;
 
-import cat.ioc.opticyou.util.EstatTreballador;
 import cat.ioc.opticyou.util.Rol;
 
 import java.util.Objects;
@@ -15,7 +14,7 @@ public class TreballadorDTO extends UsuariDTO{
     private String nom;
     private String email;
     private String especialitat;
-    private EstatTreballador estat;  // Estat pot ser 'actiu' o 'inactiu' (en minúscules)
+    private String estat;  // Estat pot ser 'actiu' o 'inactiu' (en minúscules)
     private String iniciJornada;
     private String diesJornada;
     private String fiJornada;
@@ -24,7 +23,7 @@ public class TreballadorDTO extends UsuariDTO{
     public TreballadorDTO() {
     }
 
-    public TreballadorDTO(Long idUsuari, String nom, String email, String contrasenya, Rol rol, Long idUsuari1, String nom1, String email1, String especialitat, EstatTreballador estat, String iniciJornada, String diesJornada, String fiJornada, Long clinicaId) {
+    public TreballadorDTO(Long idUsuari, String nom, String email, String contrasenya, Rol rol, Long idUsuari1, String nom1, String email1, String especialitat, String estat, String iniciJornada, String diesJornada, String fiJornada, Long clinicaId) {
         super(idUsuari, nom, email, contrasenya, rol);
         this.idUsuari = idUsuari1;
         this.nom = nom1;
@@ -69,11 +68,11 @@ public class TreballadorDTO extends UsuariDTO{
         this.especialitat = especialitat;
     }
 
-    public EstatTreballador getEstat() {
+    public String getEstat() {
         return estat;
     }
 
-    public void setEstat(EstatTreballador estat) {
+    public void setEstat(String estat) {
         this.estat = estat;
     }
 

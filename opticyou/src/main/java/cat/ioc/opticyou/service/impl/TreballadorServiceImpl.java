@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class TreballadorServiceImpl implements TreballadorService {
@@ -90,29 +91,112 @@ public class TreballadorServiceImpl implements TreballadorService {
             if (Rol.TREBALLADOR == rol){//nomes retornarà el treballador si mateixa clinica
                 Optional<Treballador> treballador = treballadorRepository.findById(jwtService.getIdFromToken(tokenNoBearer));
                 Optional<Treballador> treballadorBuscat = treballadorRepository.findById(id);
-                if (treballador.is) {
-                    return ClientMapper.toDto(client.get());
+                if (treballador.get().getClinica() == treballadorBuscat.get().getClinica()) {
+                    return TreballadorMapper.toDto(treballador.get());
                 }
             }
 
-            throw new EntityNotFoundException("No hi ha cap client amb el id entrat");
+            throw new EntityNotFoundException("No hi ha cap treballador amb el id entrat");
         }
 
         throw new SecurityException("Token expirat o no autoritzat");
     }
 
+    /**
+     * Obté una llista de tots els treballadors. Aquesta operació només es pot realitzar per un usuari amb rol d'admin.
+     * Si el token JWT és vàlid i l'usuari és administrador, es retorna la llista de treballadors.
+     * Obté una llista dels treballadors que pertanyin a la mateixa clínica del token si té el rol TREBALLADOR
+     * En cas contrari, es llença una excepció de seguretat.
+     *
+     * @param token El token JWT d'autenticació.
+     * @return      Una llista de Treballadors convertits a ClientDTO.
+     * @throws SecurityException Si el token és expirat o l'usuari no té rol d'admin.
+     */
     @Override
-    public List<ClientDTO> getAllTreballadors(String token) {
-        return List.of();
+    public List<TreballadorDTO> getAllTreballadors(String token) {
+        String tokenNoBearer = Utils.extractBearerToken(token);
+        Rol rol = jwtService.getRolFromToken(tokenNoBearer);
+
+        if (!jwtService.isTokenExpired(Utils.extractBearerToken(token)) &&
+                Rol.ADMIN == rol) {
+            List<Treballador> treballadors = treballadorRepository.findAll();
+
+            return treballadors.stream()
+                    .map(TreballadorMapper::toDto)
+                    .collect(Collectors.toList());
+        }
+        if (Rol.TREBALLADOR == rol){//nomes retornarà el treballador si mateixa clinica
+            Optional<Treballador> treballador = treballadorRepository.findById(jwtService.getIdFromToken(tokenNoBearer));
+            Long clinicaId = treballador.get().getClinica().getIdClinica();
+            List<Treballador> treballadorsMateixaClinica = treballadorRepository.findByClinicaId(clinicaId);
+            return treballadorsMateixaClinica.stream()
+                    .map(TreballadorMapper::toDto)
+                    .collect(Collectors.toList());
+        }
+        throw new SecurityException("Token expirat o no ADMIN");
     }
 
+    /**
+     * Actualitza les dades d'un treballador existent. Aquesta operació només es pot realitzar per un usuari amb rol d'admin.
+     * Si el token JWT és vàlid i l'usuari és administrador, es realitza l'actualització de les dades del treballador.
+     * En cas contrari, es llença una excepció de seguretat.
+     *
+     * @param treballadorDTO Els nous detalls del treballador a actualitzar.
+     * @param token     El token JWT d'autenticació.
+     * @return          Retorna un valor boolean que indica si l'actualització s'ha realitzat amb èxit.
+     * @throws SecurityException Si el token és expirat o l'usuari no té rol d'admin.
+     */
     @Override
     public boolean updateTreballador(TreballadorDTO treballadorDTO, String token) {
-        return false;
+        String tokenNoBearer = Utils.extractBearerToken(token);
+        if (!jwtService.isTokenExpired(tokenNoBearer) &&
+                (Rol.ADMIN == jwtService.getRolFromToken(tokenNoBearer))){
+            Treballador treballador = treballadorRepository.findById(treballadorDTO.getIdUsuari()).orElse(null);
+
+            if (treballador == null) {
+                return false;
+            }
+
+            Treballador t = TreballadorMapper.toEntity(treballadorDTO,
+                    clinicaService.getClinicaById(treballadorDTO.getClinicaId()));
+
+            t.setContrasenya(treballador.getContrasenya());
+            t.setIdUsuari(treballador.getIdUsuari());
+            treballadorRepository.save(t);
+            return true;
+
+        }
+        throw new SecurityException("Token expirat o no ADMIN");
     }
 
+    /**
+     * Elimina un treballador de la base de dades. Aquesta operació només es pot realitzar per un usuari amb rol d'admin.
+     * Si el token JWT és vàlid i l'usuari és administrador, es procedeix a eliminar el treballador. En cas contrari, es llença una excepció de seguretat.
+     *
+     * @param id     L'identificador del treballador a eliminar.
+     * @param token  El token JWT d'autenticació.
+     * @return       Retorna -1 si el treballador no existeix, 1 si l'eliminació és exitosa, i 0 si no s'ha pogut eliminar.
+     * @throws SecurityException Si el token és expirat o l'usuari no té rol d'admin.
+     */
     @Override
     public int deleteTreballador(Long id, String token) {
-        return 0;
+        if (!jwtService.isTokenExpired(Utils.extractBearerToken(token)) &&
+                (Rol.ADMIN == jwtService.getRolFromToken(Utils.extractBearerToken(token)))) {
+            Treballador treballador = treballadorRepository.findById(id).orElse(null);
+
+            if (treballador == null) {
+                return -1;
+            }
+
+            treballadorRepository.deleteById(id);
+            usuariRepositori.deleteById(id);
+
+            treballador = treballadorRepository.findById(id).orElse(null);
+            if(treballador == null) {
+                return 1;
+            }
+            return 0;
+        }
+        throw new SecurityException("Token expirat o no ADMIN");
     }
 }

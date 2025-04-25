@@ -100,7 +100,7 @@ public class ClientController {
             summary = "No permet modificar ni el idUsuari ni la contrasenya!"
     )
     @PutMapping("/update")
-    public ResponseEntity<?> updateClinica(
+    public ResponseEntity<?> updateClient(
             @RequestBody ClientDTO clientDTO,
             @RequestHeader("Authorization") String token
     ) {
@@ -126,7 +126,7 @@ public class ClientController {
      * @return      Resposta HTTP amb el missatge d'èxit o error corresponent.
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteClinica(@PathVariable Long id, @RequestHeader("Authorization") String token) {
+    public ResponseEntity<?> deleteClient(@PathVariable Long id, @RequestHeader("Authorization") String token) {
         try {
             int status = clientService.deleteClient(id, token);
             if (status == -1) {
@@ -156,7 +156,7 @@ public class ClientController {
             summary = "No permet modificar ni el idUsuari, historial o clinica"
     )
     @PutMapping("/update_client")
-    public ResponseEntity<?> updateClient(
+    public ResponseEntity<?> updateClientClient(
             @RequestBody ClientDTO clientDTO,
             @RequestHeader("Authorization") String token
     ) {
@@ -184,7 +184,7 @@ public class ClientController {
             summary = "Permet que un client es pugui eliminar a si mateix"
     )
     @DeleteMapping("/delete_client")
-    public ResponseEntity<?> deleteClient(@RequestHeader("Authorization") String token) {
+    public ResponseEntity<?> deleteClientClient(@RequestHeader("Authorization") String token) {
         try {
             int status = clientService.deleteClientClient(token);
             if (status == -1) {

@@ -4,7 +4,6 @@ package cat.ioc.opticyou.mapper;
 import cat.ioc.opticyou.dto.TreballadorDTO;
 import cat.ioc.opticyou.model.Clinica;
 import cat.ioc.opticyou.model.Treballador;
-import cat.ioc.opticyou.util.EstatTreballador;
 import cat.ioc.opticyou.util.Rol;
 
 public class TreballadorMapper {

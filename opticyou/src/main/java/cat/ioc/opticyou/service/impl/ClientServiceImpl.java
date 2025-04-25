@@ -281,7 +281,4 @@ public class ClientServiceImpl implements ClientService {
         }
         throw new SecurityException("Token expirat o no CLIENT");
     }
-
-    //TODO: CRUD client del treballador
-
 }

@@ -1,6 +1,5 @@
 package cat.ioc.opticyou.model;
 
-import cat.ioc.opticyou.util.EstatTreballador;
 import cat.ioc.opticyou.util.Rol;
 import jakarta.persistence.*;
 
@@ -12,7 +11,7 @@ import java.util.Objects;
 public class Treballador extends Usuari{
     private String especialitat;
 
-    private EstatTreballador estat;
+    private String estat;
 
     @Column(name = "inici_jornada")
     private String iniciJornada;
@@ -30,7 +29,7 @@ public class Treballador extends Usuari{
     public Treballador() {
     }
 
-    public Treballador(String especialitat, EstatTreballador estat, String iniciJornada, String diesJornada, String fiJornada, Clinica clinica) {
+    public Treballador(String especialitat, String estat, String iniciJornada, String diesJornada, String fiJornada, Clinica clinica) {
         this.especialitat = especialitat;
         this.estat = estat;
         this.iniciJornada = iniciJornada;
@@ -39,7 +38,7 @@ public class Treballador extends Usuari{
         this.clinica = clinica;
     }
 
-    public Treballador(Long idUsuari, String nom, String email, String contrasenya, Rol rol, String especialitat, EstatTreballador estat, String iniciJornada, String diesJornada, String fiJornada, Clinica clinica) {
+    public Treballador(Long idUsuari, String nom, String email, String contrasenya, Rol rol, String especialitat, String estat, String iniciJornada, String diesJornada, String fiJornada, Clinica clinica) {
         super(idUsuari, nom, email, contrasenya, rol);
         this.especialitat = especialitat;
         this.estat = estat;
@@ -57,11 +56,11 @@ public class Treballador extends Usuari{
         this.especialitat = especialitat;
     }
 
-    public EstatTreballador getEstat() {
+    public String getEstat() {
         return estat;
     }
 
-    public void setEstat(EstatTreballador estat) {
+    public void setEstat(String estat) {
         this.estat = estat;
     }
 
