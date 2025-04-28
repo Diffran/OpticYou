@@ -55,7 +55,8 @@ public class SecurityConfig {
                                 "/auth/**")
                         .permitAll().anyRequest().authenticated())
                 .authenticationProvider(authenticactionProvider())
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .requiresChannel(channel -> channel.anyRequest().requiresSecure());
 
         http.headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin));
 
