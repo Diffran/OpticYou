@@ -5,6 +5,10 @@ import jakarta.persistence.*;
 
 import java.util.Objects;
 
+/**
+ * Treballador de l'aplicació, hereta de la classe Usuari.
+ * Pot tenir informació específica com especialitat, horaris, estat actiu/inactiu, etc.
+ */
 @Entity
 @Table(name="treballador",schema="opticyou")
 @PrimaryKeyJoinColumn(name = "idtreballador")

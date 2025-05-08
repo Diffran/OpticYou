@@ -4,7 +4,10 @@ import jakarta.persistence.*;
 
 import java.sql.Timestamp;
 
-
+/**
+ * Diagnostic de l'aplicació, conté informació sobre el diagnòstic d'un pacient.
+ * Pot tenir informació específica com la descripció del diagnòstic, la data i la relació amb el historial del pacient.
+ */
 @Entity
 @Table(name = "diagnostic")
 public class Diagnostic {

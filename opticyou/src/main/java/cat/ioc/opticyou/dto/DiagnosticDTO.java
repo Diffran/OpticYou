@@ -1,5 +1,10 @@
 package cat.ioc.opticyou.dto;
 import java.sql.Timestamp;
+
+/**
+ * DTO que representa la informació d'un diagnòstic mèdic.
+ * Conté l'ID del diagnòstic, la descripció, l'ID de l'historial associat, i altres dades rellevants per a la gestió del diagnòstic.
+ */
 public class DiagnosticDTO {
     private Long iddiagnostic;
     private String descripcio;

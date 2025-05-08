@@ -1,6 +1,5 @@
 package cat.ioc.opticyou.controller;
 
-import cat.ioc.opticyou.dto.ClientDTO;
 import cat.ioc.opticyou.dto.TreballadorDTO;
 import cat.ioc.opticyou.service.TreballadorService;
 import io.swagger.v3.oas.annotations.Operation;
